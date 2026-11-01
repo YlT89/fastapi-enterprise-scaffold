@@ -1,0 +1,26 @@
+# 虚拟环境
+venv/
+.venv/
+env/
+
+# Python 缓存
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# 本地数据库
+*.db
+*.sqlite3
+
+# 敏感信息（非常重要！）
+.env
+.env.*
+
+# IDE 配置
+.idea/
+.vscode/
+
+.env7
+logs/
+
+*.pyc
