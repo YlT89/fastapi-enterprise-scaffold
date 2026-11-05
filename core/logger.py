@@ -30,7 +30,7 @@ def setup_logger():
         filename=os.path.join(LOG_DIR, "app.log"),
         when="midnight",
         interval=1,
-        backupCount=30,
+        backupCount=7,
         encoding="utf-8"
     )
     file_handler.setFormatter(logging.Formatter(LOG_FORMAT, DATE_FORMAT))
