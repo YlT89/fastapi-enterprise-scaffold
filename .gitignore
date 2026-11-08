@@ -25,3 +25,5 @@ logs/
 
 *.pyc
 check_db.py
+
+*.log

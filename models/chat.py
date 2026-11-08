@@ -17,7 +17,7 @@ class ChatMessage(SQLModel, table=True):
 
     create_time: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
+    kb_id: Optional[int] = Field(default=None, foreign_key="kb.id")
+
     user: Optional['User'] = Relationship(back_populates='chat')
 
-from models.user import User
-ChatMessage.model_rebuild()

@@ -5,20 +5,19 @@ from core.middlewares import register_middlewares
 import time
 from fastapi.responses import StreamingResponse
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
 from sqlmodel import SQLModel
 from db.session import engine
+# from fastapi import FastAPI
+from fastapi_offline import FastAPIOffline   # 下载本地Swagger页面
+# python -m pip install fastapi-offline
 
 # 这个只有运行的时候才会用到
-from models.user import User
-from models.chat import ChatMessage
-from models.address import Address
-from models.order import Order
+from models import User, Address, Order, ChatMessage, KB
 
 
 # 1. 定义生命周期
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: FastAPIOffline):
     # 启动时：建表
     print("正在检查并创建数据库表...")
     SQLModel.metadata.create_all(bind=engine)
@@ -30,25 +29,13 @@ async def lifespan(app: FastAPI):
 
 
 # 2. 把 lifespan 传给 FastAPI
-app = FastAPI(
+app = FastAPIOffline(
     title="FastAPI + SQLModel综合项目",
     version="1.0",
     lifespan=lifespan,
-    docs_url=None,
-    redoc_url=None
 )
 
-
-
-@app.get("/docs", include_in_schema=False)
-async def custom_swagger_ui_html():
-    return get_swagger_ui_html(
-        openapi_url=app.openapi_url,
-        title=app.title + " - Swagger UI",
-        # 替换为国内的 CDN 地址，例如 staticfile 或 bootcdn
-        swagger_js_url="https://cdn.staticfile.org/swagger-ui/5.1.0/swagger-ui-bundle.js",
-        swagger_css_url="https://cdn.staticfile.org/swagger-ui/5.1.0/swagger-ui.css",
-    )
+# 文件传输国内那个CDN节点老有，BUG所以换成自己本地的
 
 @app.get('/')
 def index():

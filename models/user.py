@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 if TYPE_CHECKING:
     from models.address import Address
     from models.chat import ChatMessage
+    from models.kb import KB
 
 class User(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -18,8 +19,5 @@ class User(SQLModel, table=True):
 
     addresses: List["Address"] = Relationship(back_populates='user', cascade_delete=True)
     chat: List["ChatMessage"] = Relationship(back_populates='user', cascade_delete=True)
+    kb: List['KB'] = Relationship(back_populates='user', cascade_delete=True)
 
-
-from models.address import Address
-from models.chat import ChatMessage
-User.model_rebuild()

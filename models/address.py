@@ -18,6 +18,3 @@ class Address(SQLModel, table=True):
 
 
 
-from models.user import User
-
-Address.model_rebuild()

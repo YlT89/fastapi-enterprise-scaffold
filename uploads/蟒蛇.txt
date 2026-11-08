@@ -1,0 +1,165 @@
+# region
+# 输入错误  syntax语法错误   name命令错误   AttributeError属性错误  TypeError类型错误 IndexError 索引错误   ImportError 导入错误
+# UnboundLocalError未绑定局部错误  FileNotFoundError文件未找到错误   io.UnsupportedOperation io.不支持操作
+# ValueError 值错误    UnicodeDecodeError 解码错误  StopIteration 停止迭代 KeyboardInterrupt  键盘中断
+# DeprecationWarning  弃用警告  Exception in thread xxxx  线程中某某某出现异常  ModuleNotFoundError 模块未找到错误
+# requests.exceptions.MissingSchema 请求异常缺少架构    aiohttp.client_exceptions.ContentTypeError 内容类型错误
+# IndentationError 缩进错误
+# Python 字符串格式化笔记 (Format String)
+# ==========================================
+# 1. % 格式化 (老式写法，类似C语言) —— 现在较少用，但需要能看懂
+# name = "张三"
+# age = 18
+# print("姓名：%s，年龄：%d" % (name, age))  # %s: 字符串, %d: 整数
+# print("圆周率：%.2f" % 3.14159)            # %.2f: 保留两位小数
+# # 常用的 % 占位符：%s(万能字符串), %d(整数), %f(浮点数), %x(十六进制)
+#
+# # 2. str.format() 格式化 (Python 2.6+，较现代) —— 用花括号 {} 占位
+# print("姓名：{}，年龄：{}".format(name, age))      # 默认按顺序
+# print("姓名：{0}，年龄：{1}".format(name, age))    # 按索引顺序
+# print("姓名：{n}，年龄：{a}".format(n=name, a=age)) # 按关键字传参
+#
+# # 3. f-string 格式化 (Python 3.6+，最推荐，速度最快、写法最简洁) —— 必学！
+# # 直接在字符串前加 f，然后在 {} 里写变量名甚至表达式
+# print(f"姓名：{name}，年龄：{age}")
+# print(f"明年此时，年龄：{age + 1}")                # 支持运算
+# print(f"大写姓名：{name.upper()}")               # 支持调用函数
+# # 4. 进阶：格式化数字（对齐、补零、保留小数）—— 爬虫生成URL、数据清洗时极常用
+# # 语法格式：{变量:填充字符 对齐方式 宽度 . 精度 类型}
+# num = 42
+# print(f"占10位，右对齐（默认）：{num:10}")   # 输出: '        42'
+# print(f"占10位，左对齐：{num:<10}")         # 输出: '42        '
+# print(f"占10位，居中对齐：{num:^10}")       # 输出: '    42    '
+# print(f"补零到6位：{num:06}")              # 输出: '000042' (常用于生成 001, 002 这样的序号)
+# print(f"保留两位小数：{3.14159:.2f}")      # 输出: '3.14'
+# print(f"百分比：{0.25:.1%}")               # 输出: '25.0%'
+#
+# # 5. 格式化时间 (配合你正在学的 time / datetime 模块) —— 爬虫记录日志标配
+# import time
+# now = time.localtime()
+# print(f"当前年份：{now.tm_year}")
+# # f-string 结合时间格式化
+# print(f"当前时间：{now.tm_year}-{now.tm_mon:02d}-{now.tm_mday:02d}") # 输出如：2026-09-19
+# ==========================================
+# #是注释符号   注释的内容不会被程序执行
+# ctrl+/可以添加注释   加F是查找   加D是复制到下一行
+# 输出多个值时需要用逗号隔开
+# sep是间隔多个数值（放最后），end是不用换行还能随便加字（放中间）
+# 变量 = 值
+# 加上引号会打印引号内的内容，没有引号会被识别成变量名，打印的是变量的值。如果该变量没有被赋值就会报命名错，使用变量前一定要赋值
+# 同一个变量可以反复赋值，代码是从上往下运行的
+# 整数  int     浮点型   float    布尔型   bod (布尔值可以当作整形来对待，True相当于整数1。False相当于整数0)
+# 复数    complex  （有自己的固定写法，z=a+bj_______a是实部，b是虚部，j是虚数单位（虚数单位只能是j）)
+# 占位符的三种方式  %     format    格式化 f
+# # 我要输出sixstar
+# print('sixstar')
+# #"""
+# # 我是多行注释
+# # print（123）
+# # """
+# # '''
+# # 我也是多行注释
+# # print（123)
+# # '''
+# # print('哈哈哈','嘿嘿嘿','嘻嘻嘻',sep='=',)
+# #print('hello',end='dhuiahg')
+# #print('bingbing')
+# #numl1 = 3 # numl1就是一个变量，保存可乐的价值
+# #numl2 = 10 # numl2也是一个变量，保持冰淇淋的价格
+# #total = numl1 + numl2 # total也是一个变量，保存总价格
+# #print(numl1)
+# #a = 999
+# #s1i_x = 1
+# #(user) = 1
+# #print(user)
+# #e = 1
+# #num = 1
+# #print(type (num))
+# #num2 = 0.7
+# #print(type(num2))
+# #print(type(True))
+# #print(True + False)
+# print(True + 1)
+# print(type(2+3j))
+# ma = 1+2j
+# ma2 = 2+3j
+# print(ma+ma2)
+# name = sixstar(sixstar没有被赋值所以会报错）
+# name = '''sixter
+# hh=
+# '''
+# '''
+# 我是注释，不会被执行
+# print(123)
+# '''
+# 多行注释和三引号的字符串类型的区别，多行注释是单独存在的，不需要  变量名 =
+# print(type(name))
+# print(name)
+# name = 'bingbing'
+# print("我的名字:%s"%name)
+# age = 18
+# name = 'bingbing'
+# print("我的名字:%s,年龄:%d"%(name,age))
+# a = 123
+# print('%09d'%a)
+# a = 1.2
+# print('%f'%a)
+#默认后六位小数，遵循四舍五入原则
+# b = 2.34567
+# print('%.3f'%b)默认显示七位小数
+# print('我是%%的1%%'%())
+# mnae = 'bingbing'
+# age = 18
+# print(f"我是{mnae},我今年{age}岁了")
+# print(1/1) #/商一定是浮点数，且除数不能为零
+# a = 1/1
+# print(type(a))
+# 使用算数运算符只要里面有浮点数，结果就会用浮点数表示
+#可以用（）调整计算的优先级，优先级排序幕>乘，除，取余，取整除>加减
+# print(3**2+5/2)
+# numl1 = 5
+# numl = 8
+# #将一个变量的值赋给另一个变量
+# numl = numl1
+# print(numl)
+# numl4 = numl
+# print(numl4)
+# #将运算的值赋给变量
+# total = numl+numl4
+# print(total)
+# a = 1
+# print(a)
+# # a = a + 1
+# a += 1 #等效于a=a+1
+# print(a)
+# n1 = 99 #成本价
+# n2 = 66 # 利润
+# # n1 = n1+n2 #售价
+# n1 +=n2 #等效于 n1 + n2 = n1
+# print(n2)
+# b = 1
+# print(b)
+# # b = b-1
+# b -=1
+# print(b)
+# 赋值运算符必须连着写，中间不能有空格否则会报错
+#n +=10#这样是不行的，因为n没有被赋定义
+#print(10+=3)纯数字也不能使用，因为赋值运算符是针对变量存在的
+# input(prompt) prompt是提示，会在控制台中显示
+# name = input('请输入姓名：')
+# print(name)
+# pwd = input('请输入你的密码：')
+# print(pwd)
+# print('sixs\tar')# \t 制表符
+# print('姓名\t年龄\t电话')
+# print('哈哈\n嘻嘻') # \n 换行符，表示将当前位置移到下一行开头
+# \r 回车，表示将当前位置移到本行开头
+# print('sixstar\rdfsaf')
+#\\ 反斜杠符号
+# print(r'six\\\\\tare')# r 原生字符串，默认取消转意义
+# if判断条件：
+#满足条件做的事情
+# age = 17
+# if age < 18:
+#     print('未成年人不能上网')
+# score = input('请输入成绩：')
