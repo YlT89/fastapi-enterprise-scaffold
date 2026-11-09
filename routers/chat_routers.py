@@ -111,3 +111,31 @@ async def chat_with_ai(
         stream_generator(),
         media_type="text/event-stream"
     )
+
+
+
+from core.Tools import get_weather
+from langchain_openai import ChatOpenAI
+from langchain_classic.agents import AgentExecutor, create_tool_calling_agent
+from langchain_core.prompts import ChatPromptTemplate
+
+@chat_router.post("/weather")
+async def chat_with_weather(req: ChatRequest):
+    # 1、把工具绑到大模型上 (DeepSeek 支持工具调用)
+    llm = ChatOpenAI(model='deepseek-chat', api_key=api_key, base_url="https://api.deepseek.com")
+    tools = [get_weather]
+
+    # 2、定义提示词模板
+    prompt = ChatPromptTemplate([
+        ("system", "你是一个得力的助手。"),
+        ("human", "{input}"),
+        ("placeholder", "{agent_scratchpad}"),      # 给工具留的位置
+    ])
+
+    # 3、创建 Agent
+    agent = create_tool_calling_agent(llm, tools, prompt)
+    agent_executor = AgentExecutor(agent=agent, tools=tools, prompt=prompt)
+
+    # 执行
+    result = await agent_executor.ainvoke({'input': req.question})
+    return {'answer': result['output']}
